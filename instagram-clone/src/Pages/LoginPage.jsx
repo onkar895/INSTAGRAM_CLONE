@@ -1,11 +1,7 @@
-// Material UI :
-//     Material UI is a library of React UI components that implements Google's Material Design.
-//     It includes a comprehensive collection of prebuilt components that are ready for use in production right out of the box.
-//     Material UI is beautiful by design and features a suite of customization options that make it easy to implement your own custom design system on top of our components.
-
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
-import { styled, Box, Typography } from '@mui/material'
+import { Grid, Box, styled, Typography } from "@mui/material"
+import Insta_Image from '../Images/login.svg'
 import Insta_Logo from '../Images/logoinsta.png'
 import Fb_Logo from '../Images/FbLogo.png'
 import GP_Logo from '../Images/Google_Play.png'
@@ -15,9 +11,15 @@ import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { firebaseAuth } from '../utils/firebase-config';
 
 
+// The grid creates visual consistency between layouts while allowing flexibility across a wide variety of designs. Material Design's responsive UI is based on a 12-column grid layout.
+// There are five grid breakpoints: xs, sm, md, lg, and xl.
+// Integer values can be given to each breakpoint, indicating how many of the 12 available columns are occupied by the component
+
+
 const LoginPage = () => {
 
   const navigate = useNavigate();
+
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -37,78 +39,109 @@ const LoginPage = () => {
     if (currentUser) navigate("/")
   })
 
-
   return (
 
-    <Container>
-      <LoginContainer>
-        <Box>
-          <LogoImg src={Insta_Logo} alt="InstaLogo" />
-        </Box>
 
-        <InputContainer>
-          <input type="email"
-            name='email'
-            placeholder='Phone number,username or email'
-            value={formValues.email}
-            onChange={(e) => setFormValues({
-              ...formValues,
-              [e.target.name]: e.currentTarget.value
-            })}
-          />
+    <Grid container >
+      <Grid item xs={2}  >
 
-          <input type="password"
-            name='password'
-            placeholder='Password'
-            value={formValues.password}
-            onChange={(e) => setFormValues({
-              ...formValues,
-              [e.target.name]: e.target.value
-            })}
-          />
+      </Grid>
 
-          <BtnContainer>
-            <button onClick={(e) => handleLogin(e)}>Log in</button>
-          </BtnContainer>
+      <Grid item xs={8} style={{ padding: "12px" }} >
+        <Container>
 
+          <StyledImg src={Insta_Image} alt="Instagram" />
 
-          <OrContainer>
-            <Box>OR</Box>
-          </OrContainer>
+          <MainContainer>
+            <LoginContainer>
 
-          <FbContainer>
-            <img src={Fb_Logo} alt="FbLogo" />
-            <a href='https://www.facebook.com/login/'>Log in with Facebook</a>
-          </FbContainer>
+              <Box>
+                <LogoImg src={Insta_Logo} alt="InstaLogo" />
+              </Box>
 
-          <ForgetPass>
-            <a href="#"><Typography>
-              Forgot Password ?
-            </Typography></a>
-          </ForgetPass>
+              <InputContainer>
+                <input type="email"
+                  name='email'
+                  placeholder='Phone number,username or email'
+                  value={formValues.email}
+                  onChange={(e) => setFormValues({
+                    ...formValues,
+                    [e.target.name]: e.currentTarget.value
+                  })}
+                />
 
-        </InputContainer>
-      </LoginContainer>
+                <input type="password"
+                  name='password'
+                  placeholder='Password'
+                  value={formValues.password}
+                  onChange={(e) => setFormValues({
+                    ...formValues,
+                    [e.target.name]: e.target.value
+                  })}
+                />
+
+                <BtnContainer>
+                  <button onClick={(e) => handleLogin(e)}>Log in</button>
+                </BtnContainer>
 
 
-      <SignUpContainer>
-        <Box>Dont have an account ?&nbsp;
-          <Box component="span" >Sign up</Box>
-        </Box>
-      </SignUpContainer>
+                <OrContainer>
+                  <Box>OR</Box>
+                </OrContainer>
 
-      <Box style={{ margin: "20px 0 0 0 " }}>Get The App</Box>
+                <FbContainer>
+                  <img src={Fb_Logo} alt="FbLogo" />
+                  <a href='https://www.facebook.com/login/'>Log in with Facebook</a>
+                </FbContainer>
 
-      <ImgContainer>
-        <img src={GP_Logo} alt="Google Play" />
-        <img src={MS_Logo} alt="Microsoft" />
-      </ImgContainer>
+                <ForgetPass>
+                  <a href="#"><Typography>
+                    Forgot Password ?
+                  </Typography></a>
+                </ForgetPass>
 
-    </Container>
+              </InputContainer>
+            </LoginContainer>
+
+            <LowerContainer>
+              <SignUpContainer>
+                <Box>Dont have an account ?&nbsp;
+                  <Box component="span" onClick={() => navigate("/signup")}>Sign up</Box>
+                </Box>
+              </SignUpContainer>
+
+              <GetContainer>
+                <Box style={{ margin: "20px 0 0 0 " }}>Get The App</Box>
+              </GetContainer>
+
+
+              <ImgContainer>
+                <img src={GP_Logo} alt="Google Play" />
+                <img src={MS_Logo} alt="Microsoft" />
+              </ImgContainer>
+
+            </LowerContainer>
+
+          </MainContainer>
+
+        </Container>
+
+      </Grid>
+
+      <Grid item xs={2} >
+
+      </Grid>
+    </Grid>
 
   )
 }
 
+const StyledImg = styled('img')(({ theme }) => ({
+  height: "100vh",
+  [theme.breakpoints.down("md")]: {
+    display: "none"
+  }
+}))
 
 const LogoImg = styled('img')`
 width: 180px;
@@ -119,15 +152,13 @@ const Container = styled(Box)`
 width:100vw;
 height:100vh;
 display:flex;
-flex-direction : column;
-justify-content:center;
-align-items:center;
 `
 
 const LoginContainer = styled(Box)`
 box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 text-align:center;
 padding:20px 35px;
+margin-top : 20px;
 `
 
 const InputContainer = styled("form")`
@@ -204,8 +235,18 @@ a {
   text-decoration: none;
 }
 `
-const SignUpContainer = styled(Box)`
+
+const MainContainer = styled(Box)`
 display : flex;
+flex-direction : column;
+`
+
+const LowerContainer = styled(Box)`
+display : flex;
+flex-direction: column;
+`
+
+const SignUpContainer = styled(Box)`
 box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 text-align:center;
 padding: 20px 73px;
@@ -216,8 +257,15 @@ span {
 }
 }
 `
+
+const GetContainer = styled(Box)`
+display : flex;
+justify-content: center;
+`
+
 const ImgContainer = styled(Box)`
   display : flex;
+  justify-content: center;
   gap : 6px;
   margin-top :16px;
   img {
@@ -225,6 +273,4 @@ const ImgContainer = styled(Box)`
   }
 `
 
-
-
-export default LoginPage
+export default LoginPage;

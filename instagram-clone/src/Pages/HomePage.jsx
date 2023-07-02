@@ -1,6 +1,7 @@
-import { Grid, Box, styled } from "@mui/material"
-import Insta_Image from '../Images/login.svg'
-import LoginPage from "./LoginPage"
+/* eslint-disable no-unused-vars */
+import React from "react";
+import { Grid } from "@mui/material"
+import Sidebar from "../Components/Sidebar";
 
 
 // The grid creates visual consistency between layouts while allowing flexibility across a wide variety of designs. Material Design's responsive UI is based on a 12-column grid layout.
@@ -14,33 +15,19 @@ const HomePage = () => {
 
     <Grid container >
       <Grid item xs={2}  >
-
+        <Sidebar />
       </Grid>
 
-      <Grid item xs={8} style={{ padding: "12px" }} >
-        <Container>
-          <StyledImg src={Insta_Image} alt="Instagram" />
-          <LoginPage />
-        </Container>
+      <Grid item xs={7} style={{ padding: "12px" }} >
+        fdgg
       </Grid>
 
-      <Grid item xs={2} >
-
+      <Grid item xs={3} >
+        ghhyghh
       </Grid>
     </Grid>
 
   )
 }
-
-const StyledImg = styled('img')(({ theme }) => ({
-  height: "100vh",
-  [theme.breakpoints.down("md")]: {
-    display: "none"
-  }
-}))
-
-const Container = styled(Box)`
-display : flex;
-`
 
 export default HomePage;

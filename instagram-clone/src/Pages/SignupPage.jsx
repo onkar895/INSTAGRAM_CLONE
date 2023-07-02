@@ -15,7 +15,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/aut
 import { firebaseAuth } from '../utils/firebase-config';
 
 
-const LoginPage = () => {
+const SignupPage = () => {
 
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
@@ -25,13 +25,13 @@ const LoginPage = () => {
     password: ""
   });
 
-  const handleSignIn = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     try {
       const { email, password } = formValues;
       await createUserWithEmailAndPassword(firebaseAuth, email, password)
     } catch (error) {
-      console.log(error, "error while handling signin")
+      console.log(error, "error while handling signup")
     }
   }
 
@@ -90,12 +90,19 @@ const LoginPage = () => {
           />
 
           <BtnContainer>
-            <button onClick={(e) => handleSignIn(e)}>Sign Up</button>
+            <button onClick={(e) => handleSignUp(e)}>Sign Up</button>
           </BtnContainer>
 
 
         </InputContainer>
       </LoginContainer>
+
+      <LowerContainer>
+        <Box>Have an account?&nbsp;
+          <Box component="span" onClick={() => navigate("/login")} >Login</Box>
+        </Box>
+      </LowerContainer>
+
 
       <Box style={{ margin: "20px 0 0 0 " }}>Get The App</Box>
 
@@ -116,6 +123,7 @@ margin: 10px;
 `
 
 const Container = styled(Box)`
+margin-top : 60px;
 width:100vw;
 height:100vh;
 display:flex;
@@ -199,6 +207,19 @@ a {
   color : white;
 }
 `
+const LowerContainer = styled(Box)`
+display : flex;
+box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+text-align:center;
+padding: 20px 97px;
+margin-top : 10px;
+span {
+  color:#0095F6;
+  cursor:pointer;
+}
+}
+`
+
 const SignUpContainer = styled(Box)`
 p {
 font-family:  "Trebuchet MS","Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
@@ -218,4 +239,4 @@ const ImgContainer = styled(Box)`
 
 
 
-export default LoginPage
+export default SignupPage
